@@ -24,5 +24,6 @@ int main() {
 
     cout << "[C++] hello static library, the result = " << result << endl;
 
+    system("pause");
     return 0;
 }
