@@ -33,16 +33,16 @@ CPPFLAGS = -I ./resource
 
 
 ${targetName}: ${outputObjs}
-	${CC} -o useMakefileMain $^ ${CPPFLAGS}
+	${CC} $^ ${CPPFLAGS} -o useMakefileMain
 
 
 # main函数的.o编译
 ${od}/useMakefileMain.o: ${main}
-	${CC} -c ${main}  -o ${od}/useMakefileMain.o
+	${CC} -g -c ${main}  -o ${od}/useMakefileMain.o
 
 # resource目录的.o编译
 ${od}/%.o: resource/%.c
-	${CC} -c $^ -o $@
+	${CC} -g -c $^ -o $@
 
 #清理命令
 clear:
