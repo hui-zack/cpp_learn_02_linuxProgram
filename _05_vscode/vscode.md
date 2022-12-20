@@ -170,6 +170,7 @@
     ![打开远程终端配置](_00_static/useTerminal.jpg)
 
 -   连接linux
+    根据下图的步骤连接到linux后, 就可以用vscode打开linux的文件夹进行开发了(vscode左侧导航栏第一个按钮), 但要注意, linux需要搭建开发环境才能远程开发, 具体内容请参考下一章节
     ![使用vscode连接到linux](_00_static/connectLinux.jpg)
 ** 
 
