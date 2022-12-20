@@ -1,0 +1,1 @@
+add_library(myMathShared SHARED div.cpp mul.cpp)

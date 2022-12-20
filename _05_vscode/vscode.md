@@ -1,6 +1,6 @@
 
 [toc]  
-    [Linux下C/Cpp开发环境搭建](#Linux下C/Cpp开发环境搭建)  
+    [Linux下C/Cpp开发环境搭建](#Linux下C/Cpp开发环境搭建)   
 
 ## Window下搭建vscode和c/c++开发环境
 **安装vscode**
@@ -134,7 +134,7 @@
 -   新建CMakeLists.txt写入项目信息
 
     ```cmake
-        cmake_minimum_required(VERSION 3.17)
+        # cmake_minimum_required(VERSION 3.17)
         project(_01_useCmake)
         
         set(CMAKE_CXX_STANDARD 14)
@@ -151,7 +151,9 @@
         mkdir build
         cd build
         # 指定编译器并构建cmake工程, 生成makefile文件
-        cmake -G "MinGW Makefiles" ..   # 首次创建需要指定编译器, 之后只需使用命令 cmake .. 
+        # windows下首次创建需要指定编译器, 之后只需使用命令 cmake .. , linux直接cmake ..
+            cmake -G "MinGW Makefiles" ..  # windows
+            cmake ..                       # linux 
         # 编译程序
         make 
     ```

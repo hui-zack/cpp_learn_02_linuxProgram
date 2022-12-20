@@ -11,7 +11,6 @@ void mySwap(T &value1, T &value2){
     value2 = temp;
 }
 
-
 int main(int argc, char **argv){
     int numA = 10;
     int numB = 20;

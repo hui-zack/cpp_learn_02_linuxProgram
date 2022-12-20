@@ -1,0 +1,1 @@
+add_library(myMathStatic STATIC add.cpp sub.cpp)
