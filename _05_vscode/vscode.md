@@ -27,7 +27,7 @@
 -   [下载cmake(下载msi, 不用自己配环境变量)](https://cmake.org/download/#previous)
 
 **vscode配置开发环境**
--   插件安装
+-   插件安装  
     ![按照图片安装插件](./_00_static/vscodePlugins.png)
 
 
@@ -60,6 +60,7 @@
                 "version": 4
                 }
         ```
+       
     -   launch.json 文件(不存在则新建)
         ```json5
         {
@@ -93,6 +94,7 @@
             ]
         }
         ```
+        
     -   tasks.json 文件(不存在则新建)
         ```json5
         {
@@ -126,8 +128,11 @@
         }
         
         ```
+
 **构建cmake工程并编译代码**
+
 -   新建CMakeLists.txt写入项目信息
+
     ```cmake
         cmake_minimum_required(VERSION 3.17)
         project(_01_useCmake)
@@ -138,7 +143,9 @@
         
         add_executable(test01 helloCmake.cpp)#测试代码
     ```
+
 -   创建cmake编译目录并构建cmake工程
+
     ```shell
         # 在vscode项目路径下执行
         mkdir build
@@ -148,6 +155,24 @@
         # 编译程序
         make 
     ```
+## Vscode远程开发环境搭建
+
+**vscode配置远程linux**
+-   vscode安装远程插件
+    ![安装remote-ssh插件](_00_static/remote-ssh.jpg)
+
+-   添加远程主机
+    在安装远程插件后, vscode左侧会出现远程的按钮, 点击进行如下操作
+    ![连接远程主机](_00_static/remoteLinux.jpg)
+
+-   vscode设置显示远程终端
+    在连接linux之前需要能够打开远程终端
+    ![打开远程终端配置](_00_static/useTerminal.jpg)
+
+-   连接linux
+    ![使用vscode连接到linux](_00_static/connectLinux.jpg)
+** 
+
 ## Linux下C/Cpp开发环境搭建
 ```shell
     # 更新apt
