@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 14)
 project(myProject VERSION 1.0 LANGUAGES CXX C)            # 设置项目名称, 并指定项目住版本号1, 副版本好0, 执行语言c++
 
-OPTION(ME_USE_C  "c?" OFF)
+OPTION(ME_USE_C  "c?" off)
 
 # 打印项目路径
 message("|| project dir = " ${CMAKE_SOURCE_DIR})
@@ -17,6 +17,7 @@ set(ME_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 if(EXISTS "${ME_CONFIG_DIR}/config.h.in")
   configure_file(${ME_CONFIG_DIR}/config.h.in config.h)                    # 将配置文件config.h.in的内容加载到cmake
 endif()
+
 # set(ME_TARGET  useMakefileMain mainDemo)
 # -------------------------------------------------------------------
 # debug开关
@@ -85,7 +86,6 @@ if(${ME_USE_C})
 else()
   file(GLOB_RECURSE mains RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*main*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*main*.c")
 endif()
-
 
 foreach(mainfile IN LISTS mains)
   # Get file name without directory

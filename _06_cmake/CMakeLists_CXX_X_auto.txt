@@ -17,6 +17,7 @@ set(ME_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 if(EXISTS "${ME_CONFIG_DIR}/config.h.in")
   configure_file(${ME_CONFIG_DIR}/config.h.in config.h)                    # 将配置文件config.h.in的内容加载到cmake
 endif()
+
 # set(ME_TARGET  useMakefileMain mainDemo)
 # -------------------------------------------------------------------
 # debug开关
@@ -88,47 +89,50 @@ endif()
 
 
 foreach(mainfile IN LISTS mains)
-  # Get file name without directory
-  get_filename_component(ME_TARGET ${mainfile} NAME_WE)
-  add_executable(${ME_TARGET} ${mainfile})
-
+    # Get file name without directory
+    get_filename_component(ME_TARGET ${mainfile} NAME_WE)
+    add_executable(${ME_TARGET} ${mainfile})
+message("1111111111111")
 # add_executable(${ME_TARGET} src/helloCmake.cpp)     # 设置名称为mainDemo(目标)
 
+FILE(GLOB_RECURSE SRC_HEADERS "*.h")
+FILE(GLOB_RECURSE SRC_CPPS "*.cpp")
+FILE(GLOB_RECURSE SRC_CS "*.C")
 
-  ################### 为mainDemo目标设置头文件搜索目录 ###################
+################### 为mainDemo目标设置头文件搜索目录 ###################
 
-  # 调用函数获取目录信息信息
-  FUNC_GETDIRS(SRC_DIRS ${ME_SRC_DIR} "*")                              # 获取src目录的所有子目录, 
-  FUNC_GETDIRS(STATIC_OUT_DIRS ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} "*")   # 获取静态库输出目录的所有子目录
-  FUNC_GETDIRS(SHARED_OUT_DIRS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} "*")   # 获取动态库输出目录的所有子目录
-    target_include_directories(${ME_TARGET}         # 为mainDemo目标设置头文件目录
-        PUBLIC                                  # 这些目录下的头文件既能供自己使用, 也可用作外部接口
-            ${PROJECT_BINARY_DIR}               # cmake编译目录
-            ${STATIC_OUT_DIRS}                  # 静态库输出目录下所有目录
-            ${SHARED_OUT_DIRS}                  # 动态库输出目录下所有目录
-            ${SRC_DIRS}                         # src下所有目录
-        PRIVATE                                 # 这些目录下的头文件只能供自己使用
-        INTERFACE                               # 这些目录下的头文件只能用作外部接口
-  ) 
+# 调用函数获取目录信息信息
+FUNC_GETDIRS(SRC_DIRS ${ME_SRC_DIR} "*")                              # 获取src目录的所有子目录, 
+FUNC_GETDIRS(STATIC_OUT_DIRS ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} "*")   # 获取静态库输出目录的所有子目录
+FUNC_GETDIRS(SHARED_OUT_DIRS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} "*")   # 获取动态库输出目录的所有子目录
+target_include_directories(${ME_TARGET}         # 为mainDemo目标设置头文件目录
+    PUBLIC                                  # 这些目录下的头文件既能供自己使用, 也可用作外部接口
+        ${PROJECT_BINARY_DIR}               # cmake编译目录
+        ${STATIC_OUT_DIRS}                  # 静态库输出目录下所有目录
+        ${SHARED_OUT_DIRS}                  # 动态库输出目录下所有目录
+        ${SRC_DIRS}                         # src下所有目录
+    PRIVATE                                 # 这些目录下的头文件只能供自己使用
+    INTERFACE                               # 这些目录下的头文件只能用作外部接口
+) 
 
 
-  ############################## 自动链接库文件 ##########################
-  IF(${ME_IS_LINUX})
-    FUNC_GETFILES(staticLibs ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} ".a")        # 获取静态库输出目录所有的.a文件路径
-    FUNC_GETFILES(sharedLibs ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ".so")       # 获取静态库输出目录所有的.so文件路径
-  ENDIF()
+############################## 自动链接库文件 ##########################
+IF(${ME_IS_LINUX})
+  FUNC_GETFILES(staticLibs ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} ".a")        # 获取静态库输出目录所有的.a文件路径
+  FUNC_GETFILES(sharedLibs ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ".so")       # 获取静态库输出目录所有的.so文件路径
+ENDIF()
 
-  IF(${ME_IS_windows})
-    FUNC_GETFILES(staticLibs ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} ".lib")
-    FUNC_GETFILES(sharedLibs ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ".dll")
-  ENDIF()
+IF(${ME_IS_windows})
+  FUNC_GETFILES(staticLibs ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY} ".lib")
+  FUNC_GETFILES(sharedLibs ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} ".dll")
+ENDIF()
 
-  #为mainDemo链接需要用的静态库和动态库(只写库名即可多个库用空格隔开)
-  target_link_libraries(${ME_TARGET} 
+#为mainDemo链接需要用的静态库和动态库(只写库名即可多个库用空格隔开)
+target_link_libraries(${ME_TARGET} 
     PUBLIC                
-      ${staticLibs}         # 使用的静态库具体到文件名称
-      ${sharedLibs}         # 项目中使用的动态库具体到文件名称
-  )
+        ${staticLibs}         # 使用的静态库具体到文件名称
+        ${sharedLibs}         # 项目中使用的动态库具体到文件名称
+)
 
 endforeach()
 

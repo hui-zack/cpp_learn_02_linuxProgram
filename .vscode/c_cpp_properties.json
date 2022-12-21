@@ -4,8 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/_06_cmake/lib",
-                "${workspaceFolder}/_06_cmake/bin"
+                "${workspaceFolder}/_06_cmake/lib"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
